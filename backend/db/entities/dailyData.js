@@ -35,7 +35,7 @@ const dailyDataSchema = new mongoose.Schema({
 });
 
 // Create a model with the schema
-const DailyData = mongoose.model('DailyData', dailyDataSchema);
+const DailyData = mongoose.model('DailyData', dailyDataSchema, 'daily_stocks_data');
 
 // Export the model
 module.exports = DailyData;

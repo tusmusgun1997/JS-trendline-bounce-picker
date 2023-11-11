@@ -1,0 +1,38 @@
+/* SearchResults.module.css */
+
+.searchResults {
+  position: relative;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  color: black;
+  width: 30%; /* Set the width to 30% */
+  padding: 10px; /* Add padding for a bit of spacing */
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space between symbol and buttons */
+  align-items: center; /* Align items vertically */
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+button {
+  background-color: rgb(57, 57, 124);
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 3px;
+  margin-left: 5px; /* Add space between buttons */
+  cursor: pointer;
+}

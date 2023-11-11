@@ -1,12 +1,15 @@
 // Importing the express module
 const express = require('express');
-const db = require('./db/config');
 const { fetchDataForSymbol, fetchDistinctSymbolsWithSearchString } = require('./db/helpers/dailyData');
 const { fetchAndSortWeeklyDataForSymbol } = require('./db/helpers/weeklyData');
+const connectDB = require('./db/config');
+const cors = require("cors");
+
+connectDB()
 
 // Creating an Express application
 const app = express();
-
+app.use(cors());
 // Define a route for the root URL
 app.get('/api/daily-data/:symbol', async (req, res) => {
   const { symbol } = req.params;
@@ -24,6 +27,7 @@ app.get('/api/daily-data/:symbol', async (req, res) => {
 // API endpoint to fetch and sort weekly data for a symbol
 app.get('/api/weekly-data/:symbol', async (req, res) => {
   const { symbol } = req.params;
+  console.log(symbol)
 
   try {
     // Use the weekly data helper function to fetch and sort data for the provided symbol
@@ -37,6 +41,7 @@ app.get('/api/weekly-data/:symbol', async (req, res) => {
 
 app.get('/api/search-symbols', async (req, res) => {
   const { search } = req.query;
+  console.log(search)
 
   try {
     // Use the helper function to fetch distinct symbols containing the search string

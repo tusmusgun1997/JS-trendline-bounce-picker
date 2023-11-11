@@ -31,7 +31,7 @@ const weeklyDataSchema = new mongoose.Schema({
 });
 
 // Create a model with the schema
-const WeeklyData = mongoose.model('WeeklyData', weeklyDataSchema);
+const WeeklyData = mongoose.model('WeeklyData', weeklyDataSchema, 'weekly_stocks_data');
 
 // Export the model
 module.exports = WeeklyData;
