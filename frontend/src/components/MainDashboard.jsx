@@ -6,6 +6,7 @@ import SearchResults from './SearchResults';
 import DailyData from './DailyData';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import WeeklyData from './WeeklyData';
+import StockData from './StockData';
 
 
 const MainDashboard = () => {
@@ -17,6 +18,7 @@ const MainDashboard = () => {
         <Routes>
             <Route path="/daily/:symbol" element={<DailyData />} />
             <Route path="/weekly/:symbol" element=  {<WeeklyData/>}/>
+            <Route path="/stock/:symbol" element = {<StockData/>}/>
             <Route path="/*" element={<Navigate to="/" />} />{" "}
         </Routes>
 

@@ -1,29 +1,10 @@
 // DailyData.jsx
 
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { createChart, PriceScaleMode } from "lightweight-charts";
-import { useParams } from "react-router-dom";
-import { fetchDailyData } from "../redux/dailyDataSlice";
 
-const DailyData = () => {
-  const { symbol: urlSymbol } = useParams();
-  const dispatch = useDispatch();
-  const dailyData = useSelector((state) => state.dailyData.data);
 
-  useEffect(() => {
-    // Trigger fetchDailyData only if the symbol from the URL is different from the current symbol
-    if (urlSymbol && urlSymbol !== dailyData?.symbol) {
-      dispatch(fetchDailyData(urlSymbol));
-    }
-  }, [urlSymbol, dailyData?.symbol, dispatch]);
-
-  useEffect(() => {
-    if (dailyData && dailyData.length > 0) {
-      const cleanedData = removeDuplicateDates(dailyData[0].data);
-      renderChart(dailyData[0].symbol, cleanedData);
-    }
-  }, [dailyData]);
+const DailyData = ({data}) => {
 
   const removeDuplicateDates = (data) => {
     const uniqueDates = new Set();
@@ -36,6 +17,12 @@ const DailyData = () => {
       return false;
     });
   };
+  useEffect(() => {
+    if (data && data.length > 0) {
+      const cleanedData = removeDuplicateDates(data[0].data);
+      renderChart(data[0].symbol, cleanedData);
+    }
+  }, [data]);
 
   const renderChart = (symbol, data) => {
     const chartProperties = {
@@ -56,10 +43,8 @@ const DailyData = () => {
     chart.priceScale('right').applyOptions({
       mode: PriceScaleMode.Logarithmic
     })
-    console.log(chart)
     const candleSeries = chart.addCandlestickSeries();
-  
-    // Transform your cleaned data structure to match the expected format
+      // Transform your cleaned data structure to match the expected format
     const transformedData = data.map((d) => ({
       time: new Date(d.date).getTime() / 1000,
       open: d.open,
@@ -97,9 +82,8 @@ const DailyData = () => {
 
   return (
     <div>
-      {dailyData && dailyData.length > 0 && (
+      {data && data.length > 0 && (
         <div>
-          <h2>Symbol: {dailyData[0].symbol}</h2>
           <div id="daily-chart"></div>
         </div>
       )}
