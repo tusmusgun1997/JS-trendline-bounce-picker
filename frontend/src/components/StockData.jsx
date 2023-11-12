@@ -28,7 +28,7 @@ const StockData = () => {
 
   return (
     <div className={styles.stockData}>
-      <h1>Stock Name: {selectedSymbol}</h1>
+      <h1>{selectedSymbol}</h1>
 
       {/* Section for weeklyLowTrendlineData */}
       {activeTab === "W" && (
@@ -131,8 +131,8 @@ const StockData = () => {
 
       {/* Section for weeklyHighTrendlineData */}
       <div className={styles.tabButtons}>
-        <button onClick={() => handleTabClick("D")}>D</button>
-        <button onClick={() => handleTabClick("W")}>W</button>
+        <button onClick={() => handleTabClick("D")}><b>D</b></button>
+        <button onClick={() => handleTabClick("W")}><b>W</b></button>
       </div>
       <div className={styles.tabContent}>
         {activeTab === "D" ? (

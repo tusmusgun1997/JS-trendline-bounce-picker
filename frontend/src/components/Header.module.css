@@ -5,10 +5,11 @@
   justify-content: space-between; /* Center the search bar horizontally */
   max-width: 100%;
   margin: 0 auto;
-  background-color: rgb(29, 49, 51);
-  color: white;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
   padding: 10px 15px;
   width: 100%;
+  border-bottom: 0.5px solid black;
 }
 
 .searchBar{
@@ -16,11 +17,12 @@
 }
 
 input {
-  border: none;
+  border: 2px solid black;
   outline: none;
   width: 400px; /* Set the width to 60% */
   padding: 10px;
   border-radius: 20px;
+  margin-right: 6px;
 }
 
 .search-icon {
