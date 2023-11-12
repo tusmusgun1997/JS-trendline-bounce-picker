@@ -1,26 +1,28 @@
+// SearchResults.jsx
+
 import React from "react";
 import styles from "./SearchResults.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowResults } from "../redux/symbolsSlice";
 import { useNavigate } from "react-router-dom";
-import { fetchDailyData } from "../redux/dailyDataSlice";
-import { fetchWeeklyData } from "../redux/weeklyDataSlice";
+import { fetchStockData, setSymbolSelected } from "../redux/stockDataSlice";
 
 const SearchResults = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const symbols = useSelector((state) => state.symbols.list);
 
-  const handleClick = (symbol, type) => {
-    // Dispatch the appropriate fetch action based on the button clicked
-    if (type === "D") {
-      dispatch(fetchDailyData(symbol));
-      navigate(`/daily/${symbol}`);
-    } else if (type === "W") {
-      dispatch(fetchWeeklyData(symbol));
-      navigate(`/weekly/${symbol}`);
-    }
+  const handleClick = async (symbol) => {
+    // Dispatch the fetchStockData action to get both daily and weekly data
+    dispatch(fetchStockData(symbol));
 
+    // Set the selected symbol in the stockData slice
+    dispatch(setSymbolSelected(symbol));
+
+    // Navigate to the combined view
+    navigate(`/stock/${symbol}`);
+
+    // Hide the search results
     dispatch(setShowResults(false));
   };
 
@@ -28,13 +30,8 @@ const SearchResults = () => {
     <div className={styles.searchResults}>
       <ul>
         {symbols.map((result) => (
-          <li key={result}>
+          <li key={result} onClick={() => handleClick(result)}>
             {result}
-            <div>
-              <button onClick={() => handleClick(result, "D")}>D</button>
-              <button onClick={() => handleClick(result, "W")}>W</button>
-            </div>
-            
           </li>
         ))}
       </ul>

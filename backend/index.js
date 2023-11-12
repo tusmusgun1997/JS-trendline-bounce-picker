@@ -4,6 +4,8 @@ const { fetchDataForSymbol, fetchDistinctSymbolsWithSearchString } = require('./
 const { fetchAndSortWeeklyDataForSymbol } = require('./db/helpers/weeklyData');
 const connectDB = require('./db/config');
 const cors = require("cors");
+const { getAllWeeklyHighTrendlineData, getWeeklyHighTrendlineDataBySymbol } = require('./db/helpers/weeklyHighTrendlineData');
+const { getWeeklyLowTrendlineDataBySymbol, getAllWeeklyLowTrendlineData } = require('./db/helpers/weeklyLowTrendlineData');
 
 connectDB()
 
@@ -52,6 +54,54 @@ app.get('/api/search-symbols', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+app.get('/api/weekly-high-trendline/:symbol', async (req, res) => {
+  const { symbol } = req.params;
+
+  try {
+    const trendlineData = await getWeeklyHighTrendlineDataBySymbol(symbol);
+
+    res.json({ trendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get all weekly high trendline data
+app.get('/api/all-weekly-high-trendline', async (req, res) => {
+  try {
+    const allTrendlineData = await getAllWeeklyHighTrendlineData();
+
+    res.json({ allTrendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get weekly low trendline data by symbol
+app.get('/api/weekly-low-trendline/:symbol', async (req, res) => {
+  const { symbol } = req.params;
+
+  try {
+    const trendlineData = await getWeeklyLowTrendlineDataBySymbol(symbol);
+
+    res.json({ trendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get all weekly low trendline data
+app.get('/api/all-weekly-low-trendline', async (req, res) => {
+  try {
+    const allTrendlineData = await getAllWeeklyLowTrendlineData();
+
+    res.json({ allTrendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 // Start the server on port 3000
 const port = 3000;

@@ -1,0 +1,38 @@
+/* StockData.module.css */
+
+.stockData {
+    padding: 20px;
+  }
+  
+  .dataContainer {
+    display: flex;
+  }
+  
+  .dataSection {
+    flex: 1;
+    margin: 0 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .tabButtons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .tabButtons button {
+    font-size: 18px;
+    margin: 0 10px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .tabButtons button:hover {
+    background-color: #ddd;
+  }
+  
+  .tabContent {
+    margin-top: 20px;
+  }
+  
