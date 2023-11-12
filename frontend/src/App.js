@@ -7,6 +7,7 @@ import MainDashboard from './components/MainDashboard';
 import DailyData from './components/DailyData';
 import WeeklyData from './components/WeeklyData';
 import StockData from './components/StockData';
+import Home from './components/Home';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <div className="App">
         <MainDashboard>
           <Routes>
+            <Route path="/" element = {<Home/>}/>
             <Route path="/daily/:symbol" element={<DailyData />} />
             <Route path="/weekly/:symbol" element=  {<WeeklyData/>}/>
             <Route path="/stock/:symbol" element = {<StockData/>}/>

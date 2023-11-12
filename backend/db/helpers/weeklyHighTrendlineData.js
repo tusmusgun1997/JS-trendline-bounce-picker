@@ -14,6 +14,7 @@ async function getWeeklyHighTrendlineDataBySymbol(symbol) {
 async function getAllWeeklyHighTrendlineData() {
   try {
     const data = await WeeklyHighTrendlineData.find();
+    console.log(data)
     return data.map(entry => ({ symbol: entry.symbol, trendline_data: entry.trendline_data }));
   } catch (error) {
     throw new Error(`Error while fetching all weekly high trendline data: ${error.message}`);
