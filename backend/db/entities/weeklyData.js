@@ -8,26 +8,30 @@ const weeklyDataSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  date: {
-    type: String,
-    required: true,
-  },
-  open: {
-    type: Number,
-    required: true,
-  },
-  low: {
-    type: Number,
-    required: true,
-  },
-  high: {
-    type: Number,
-    required: true,
-  },
-  close: {
-    type: Number,
-    required: true,
-  },
+  data: [
+    {
+      open: {
+        type: Number,
+        required: true,
+      },
+      low: {
+        type: Number,
+        required: true,
+      },
+      high: {
+        type: Number,
+        required: true,
+      },
+      close: {
+        type: Number,
+        required: true,
+      },
+      date: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 // Create a model with the schema

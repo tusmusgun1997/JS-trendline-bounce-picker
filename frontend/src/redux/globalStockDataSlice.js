@@ -12,7 +12,6 @@ export const fetchAllWeeklyHighTrendlineData = createAsyncThunk(
   async () => {
     try {
       const response = await getAllWeeklyHighTrendlineData();
-      console.log(response)
       return response.allTrendlineData;
     } catch (error) {
       throw error;
@@ -26,7 +25,6 @@ export const fetchAllWeeklyLowTrendlineData = createAsyncThunk(
   async () => {
     try {
       const response = await getAllWeeklyLowTrendlineData();
-      console.log(response)
       return response.allTrendlineData;
     } catch (error) {
       throw error;
