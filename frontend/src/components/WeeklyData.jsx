@@ -1,15 +1,13 @@
-// WeeklyData.jsx
-
 import React, { useEffect } from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 
-const WeeklyData = ({ data }) => {
+const WeeklyData = ({ weeklyData, weeklyHighTrendlineData, weeklyLowTrendlineData }) => {
   useEffect(() => {
-    if (data && data.length > 0) {
-      const cleanedData = removeDuplicateDates(data);
-      renderChart(data[0].symbol, cleanedData);
+    if (weeklyData && weeklyData.length > 0) {
+      const cleanedData = removeDuplicateDates(weeklyData);
+      renderChart(weeklyData[0].symbol, cleanedData, weeklyHighTrendlineData, weeklyLowTrendlineData);
     }
-  }, [data]);
+  }, [weeklyData, weeklyHighTrendlineData, weeklyLowTrendlineData]);
 
   const removeDuplicateDates = (data) => {
     const uniqueDates = new Set();
@@ -23,9 +21,9 @@ const WeeklyData = ({ data }) => {
     });
   };
 
-  const renderChart = (symbol, data) => {
+  const renderChart = (symbol, data, highTrendlineData, lowTrendlineData) => {
     const chartProperties = {
-      width: 1500,
+      width: 1400,
       height: 600,
       timeScale: {
         timeVisible: true,
@@ -51,31 +49,71 @@ const WeeklyData = ({ data }) => {
       high: d.high,
       low: d.low,
       close: d.close,
-    }));
+    })).sort((data1, data2) => {
+      if(data1['time'] < data2['time']) return -1;
+      else return 1 
+    });
+
+    console.log(transformedData)
 
     candleSeries.setData(transformedData);
 
-    // Generate two random dates within the data range
-    const randomDate1 = transformedData[8].time;
-    const randomDate2 = transformedData[15].time;
 
-    // Draw trendline
-    const trendlineSeries = chart.addLineSeries({
-      color: "green",
-      lineStyle: 1, // Solid line
-    });
+    // Draw high trendline
+    if (highTrendlineData && highTrendlineData.length > 0) {
 
-    const trendlineData = [
-      { time: randomDate1, value: transformedData[8].low }, // Start from the low of the first candle
-      { time: randomDate2, value: transformedData[15].low }, // End at the high of the last candle
-    ];
+      highTrendlineData.forEach((dataPoint) => {
+        const highTrendlineSeries = chart.addLineSeries({
+          color: "red",
+          lineStyle: 1, // Solid line
+        });
 
-    trendlineSeries.setData(trendlineData);
+       const transformedData =  [{
+          time: new Date(dataPoint.start).getTime() / 1000,
+          value: dataPoint.start_intercept,
+        },
+        {
+          time: new Date(dataPoint.end).getTime() / 1000,
+          value: dataPoint.end_intercept,
+        },]
+        highTrendlineSeries.setData(transformedData);
+
+        return transformedData
+
+      });
+
+    }
+
+    // Draw low trendline
+    if (lowTrendlineData && lowTrendlineData.length > 0) {
+
+      lowTrendlineData.forEach((dataPoint) => {
+        const lowTrendlineSeries = chart.addLineSeries({
+          color: "green",
+          lineStyle: 1, // Solid line
+        });
+        const transformedData = [
+          {
+            time: new Date(dataPoint.start).getTime() / 1000,
+            value: dataPoint.start_intercept,
+          },
+          {
+            time: new Date(dataPoint.end).getTime() / 1000,
+            value: dataPoint.end_intercept,
+          },
+        ]
+        lowTrendlineSeries.setData(transformedData);
+
+        return transformedData
+      });
+
+
+    }
   };
 
   return (
     <div>
-      {data && data.length > 0 && (
+      {weeklyData && weeklyData.length > 0 && (
         <div>
           <div id="weekly-chart"></div>
         </div>

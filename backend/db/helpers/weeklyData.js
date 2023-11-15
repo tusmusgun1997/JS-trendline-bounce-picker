@@ -6,7 +6,7 @@ const WeeklyData = require('../entities/weeklyData');
 async function fetchAndSortWeeklyDataForSymbol(symbol) {
   try {
     // Use the WeeklyData model to find data for the provided symbol and sort by date in ascending order
-    const data = await WeeklyData.find({ symbol }).sort({ date: 'asc' });
+    const data = await WeeklyData.find({ symbol })
 
     return data;
   } catch (error) {

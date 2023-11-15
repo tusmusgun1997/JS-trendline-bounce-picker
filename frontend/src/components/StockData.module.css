@@ -1,38 +1,95 @@
 /* StockData.module.css */
 
 .stockData {
-    padding: 20px;
-  }
-  
-  .dataContainer {
-    display: flex;
-  }
-  
-  .dataSection {
-    flex: 1;
-    margin: 0 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-  }
-  
-  .tabButtons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .tabButtons button {
-    font-size: 18px;
-    margin: 0 10px;
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-  
-  .tabButtons button:hover {
-    background-color: #ddd;
-  }
-  
-  .tabContent {
-    margin-top: 20px;
-  }
-  
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.stockData h1{
+  margin: auto;
+  color: rgb(0, 0, 0);
+}
+
+.dataContainer {
+  display: flex;
+}
+
+.dataSection {
+  flex: 1;
+  margin: 0 10px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+.tabButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tabButtons button {
+  font-size: 18px;
+  margin: 0 10px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.tabButtons button:hover {
+  background-color: #ffffff;
+  color: black
+}
+
+.tabContent {
+  /* margin-top: 50px; */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  /* padding: 10px; */
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background-color: white;
+}
+
+.scrollableContainer {
+  border: 1px solid #ddd; /* Border for the scrollable container */
+  overflow-x: auto;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  margin-top: 20px;
+}
+
+.trendlineSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  margin-bottom: 20px;
+  padding: 10px; /* Add padding for better aesthetics */
+  /* border-radius: 10px; */
+
+}
+
+.trendlineBox {
+  width: 20%;
+  height: 20%;
+  /* border: 2px solid rgb(29, 49, 51); */
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  margin-right: 2%;
+  color: rgb(29, 49, 51);
+  background-color: rgb(229, 227, 227);
+}
+
+.lowTrendline {
+  color: green;
+}
+
+.highTrendline {
+  color: red;
+}

@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
+import styles from './DailyData.module.css'
 
 
 const DailyData = ({data}) => {
@@ -19,14 +20,14 @@ const DailyData = ({data}) => {
   };
   useEffect(() => {
     if (data && data.length > 0) {
-      const cleanedData = removeDuplicateDates(data[0].data);
+      const cleanedData = removeDuplicateDates(data);
       renderChart(data[0].symbol, cleanedData);
     }
   }, [data]);
 
   const renderChart = (symbol, data) => {
     const chartProperties = {
-      width: 1500,
+      width: 1400,
       height: 600,
       timeScale: {
         timeVisible: true,
@@ -62,21 +63,25 @@ const DailyData = ({data}) => {
     // });
   
     // Generate two random dates within the data range
-    const randomDate1 = transformedData[800].time;
-    const randomDate2 = transformedData[1000].time;
+    // const randomDate1 = transformedData[800].time;
+    // const randomDate2 = transformedData[900].time;
+    // const randomDate3 = transformedData[1000].time;
   
-    // Draw trendline
-    const trendlineSeries = chart.addLineSeries({
-      color: "green",
-      lineStyle: 1, // Solid line
-    });
+    // // Draw trendline
+    // const trendlineSeries = chart.addLineSeries({
+    //   color: "green",
+    //   lineStyle: 1, // Solid line
+    // });
   
-    const trendlineData = [
-      { time: randomDate1, value: transformedData[800].low }, // Start from the low of the first candle
-      { time: randomDate2, value: transformedData[1000].low }, // End at the high of the last candle
-    ];
-  
-    trendlineSeries.setData(trendlineData);
+    // const trendlineData = [
+    //   { time: randomDate1, value: transformedData[800].low }, // Start from the low of the first candle
+    //   { time: randomDate2, value: transformedData[900].low },
+    //   { time: randomDate3, value: transformedData[1000].low }, // End at the high of the last candle
+    // ];
+
+    
+
+    // trendlineSeries.setData(trendlineData);
   };
   
 
@@ -84,7 +89,7 @@ const DailyData = ({data}) => {
     <div>
       {data && data.length > 0 && (
         <div>
-          <div id="daily-chart"></div>
+          <div id="daily-chart" className={styles.dailyChart}></div>
         </div>
       )}
     </div>

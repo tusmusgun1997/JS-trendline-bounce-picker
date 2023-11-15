@@ -6,7 +6,6 @@ import { getWeeklyData } from '../api'; // Adjust the path based on your project
 // Async thunk to fetch weekly data for a symbol
 export const fetchWeeklyData = createAsyncThunk('weeklyData/fetchWeeklyData', async (symbol) => {
   const response = await getWeeklyData(symbol);
-  console.log(response.data)
   return response.data; // Assuming the API response has a "data" property
 });
 

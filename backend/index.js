@@ -29,8 +29,6 @@ app.get('/api/daily-data/:symbol', async (req, res) => {
 // API endpoint to fetch and sort weekly data for a symbol
 app.get('/api/weekly-data/:symbol', async (req, res) => {
   const { symbol } = req.params;
-  console.log(symbol)
-
   try {
     // Use the weekly data helper function to fetch and sort data for the provided symbol
     const data = await fetchAndSortWeeklyDataForSymbol(symbol);
@@ -43,8 +41,6 @@ app.get('/api/weekly-data/:symbol', async (req, res) => {
 
 app.get('/api/search-symbols', async (req, res) => {
   const { search } = req.query;
-  console.log(search)
-
   try {
     // Use the helper function to fetch distinct symbols containing the search string
     const symbols = await fetchDistinctSymbolsWithSearchString(search);

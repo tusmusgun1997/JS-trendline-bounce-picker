@@ -1,8 +1,7 @@
 // StockData.jsx
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import DailyData from "./DailyData";
 import WeeklyData from "./WeeklyData";
 import { fetchStockData, setSymbolSelected } from "../redux/stockDataSlice";
@@ -14,8 +13,9 @@ const StockData = () => {
   const selectedSymbol = useSelector((state) => state.stockData.symbolSelected);
   const dailyData = useSelector((state) => state.stockData.dailyData);
   const weeklyData = useSelector((state) => state.stockData.weeklyData);
+  const weeklyHighTrendlineData = useSelector((state) => state.stockData.weeklyHighTrendlineData);
+  const weeklyLowTrendlineData = useSelector((state) => state.stockData.weeklyLowTrendlineData);
   const [activeTab, setActiveTab] = useState("D");
-  console.log(dailyData, weeklyData)
 
   useEffect(() => {
     dispatch(setSymbolSelected(urlSymbol));
@@ -28,40 +28,121 @@ const StockData = () => {
 
   return (
     <div className={styles.stockData}>
-      <h1>Stock Name: {selectedSymbol}</h1>
-      <div className={styles.dataContainer}>
-        <div className={styles.dataSection}>
-          <h2>Daily Data</h2>
-          {dailyData.length > 0 && (
-            <div>
-              <p>Latest Close: {dailyData[0].close}</p>
-              <p>Latest Open: {dailyData[0].open}</p>
-              <p>Latest Low: {dailyData[0].low}</p>
-              <p>Latest High: {dailyData[0].high}</p>
-            </div>
-          )}
+      <h1>{selectedSymbol}</h1>
+
+      {/* Section for weeklyLowTrendlineData */}
+      {activeTab === "W" && (
+        <div className={styles.scrollableContainer}>
+          <div className={styles.trendlineSection}>
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyLowTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.lowTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+            {weeklyHighTrendlineData.map((trendlineData) => (
+              <div className={`${styles.trendlineBox} ${styles.highTrendline}`} key={trendlineData._id}>
+                <p><b>Start:</b> {trendlineData.start}</p>
+                <p><b>Continuation:</b> {trendlineData.continuation}</p>
+                <p><b>End Intercept:</b> {Math.floor(trendlineData.end_intercept)}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className={styles.dataSection}>
-          <h2>Weekly Data</h2>
-          {weeklyData.length > 0 && (
-            <div>
-              <p>Latest Close: {weeklyData[0].close}</p>
-              <p>Latest Open: {weeklyData[0].open}</p>
-              <p>Latest Low: {weeklyData[0].low}</p>
-              <p>Latest High: {weeklyData[0].high}</p>
-            </div>
-          )}
-        </div>
-      </div>
+      )}
+
+      {/* Section for weeklyHighTrendlineData */}
       <div className={styles.tabButtons}>
-        <button onClick={() => handleTabClick("D")}>D</button>
-        <button onClick={() => handleTabClick("W")}>W</button>
+        <button onClick={() => handleTabClick("D")}><b>D</b></button>
+        <button onClick={() => handleTabClick("W")}><b>W</b></button>
       </div>
       <div className={styles.tabContent}>
         {activeTab === "D" ? (
           <DailyData data={dailyData} />
         ) : (
-          <WeeklyData data={weeklyData} />
+          <WeeklyData
+            weeklyData={weeklyData}
+            weeklyHighTrendlineData={weeklyHighTrendlineData}
+            weeklyLowTrendlineData={weeklyLowTrendlineData}
+          />
         )}
       </div>
     </div>

@@ -31,3 +31,42 @@ export const searchSymbols = async (search) => {
     throw error.response.data.error;
   }
 };
+
+export const getWeeklyHighTrendlineData = async (symbol) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/weekly-high-trendline/${symbol}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch all weekly high trendline data
+export const getAllWeeklyHighTrendlineData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/all-weekly-high-trendline`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch weekly low trendline data for a symbol
+export const getWeeklyLowTrendlineData = async (symbol) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/weekly-low-trendline/${symbol}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch all weekly low trendline data
+export const getAllWeeklyLowTrendlineData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/all-weekly-low-trendline`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};

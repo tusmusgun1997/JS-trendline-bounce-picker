@@ -6,7 +6,7 @@ import { searchSymbols } from '../api'; // Adjust the path based on your project
 // Async thunk to fetch symbols
 export const fetchSymbols = createAsyncThunk('symbols/fetchSymbols', async (searchQuery) => {
   const response = await searchSymbols(searchQuery);
-  return response.symbols; // Assuming the API response has a "symbols" property
+  return response.symbols.slice(0,5); // Assuming the API response has a "symbols" property
 });
 
 // Create a symbol slice

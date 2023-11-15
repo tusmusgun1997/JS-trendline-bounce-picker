@@ -1,15 +1,16 @@
 // Header.js
 
 import React, { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaHome } from "react-icons/fa";
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { fetchSymbols, setShowResults } from "../redux/symbolsSlice";
 import styles from "./Header.module.css";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const dispatch = useDispatch();
-
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     if (searchQuery) {
@@ -24,9 +25,15 @@ const Header = () => {
     dispatch(setShowResults(true)); // Show results when typing in the search bar
   };
 
+  const navigateToHome = () => {
+    navigate('/'); // Redirect to the base URL
+  };
+
   return (
-    <div className={styles.header}>
       <div className={styles.container}>
+        <div className={styles.logoContainer} onClick={navigateToHome}>
+          <FaHome className={styles.homeIcon} />
+        </div>
         <div className={styles.searchBar}>
           <input
             type="text"
@@ -36,7 +43,6 @@ const Header = () => {
           <FaSearch className={styles.searchIcon} />
         </div>
       </div>
-    </div>
   );
 };
 
