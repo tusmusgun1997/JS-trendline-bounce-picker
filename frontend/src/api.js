@@ -32,6 +32,47 @@ export const searchSymbols = async (search) => {
   }
 };
 
+// Function to fetch daily low trendline data for a symbol
+export const getDailyLowTrendlineData = async (symbol) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/daily-low-trendline/${symbol}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch all daily low trendline data
+export const getAllDailyLowTrendlineData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/all-daily-low-trendline`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch daily high trendline data for a symbol
+export const getDailyHighTrendlineData = async (symbol) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/daily-high-trendline/${symbol}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch all daily high trendline data
+export const getAllDailyHighTrendlineData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/all-daily-high-trendline`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+};
+
+// Function to fetch weekly high trendline data for a symbol
 export const getWeeklyHighTrendlineData = async (symbol) => {
   try {
     const response = await axios.get(`${BASE_URL}/weekly-high-trendline/${symbol}`);

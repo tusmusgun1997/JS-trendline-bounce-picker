@@ -4,9 +4,7 @@ import React, { useEffect } from "react";
 import { createChart, PriceScaleMode } from "lightweight-charts";
 import styles from './DailyData.module.css'
 
-
-const DailyData = ({data}) => {
-
+const DailyData = ({ data, dailyHighTrendlineData, dailyLowTrendlineData }) => {
   const removeDuplicateDates = (data) => {
     const uniqueDates = new Set();
     return data.filter((d) => {
@@ -18,14 +16,15 @@ const DailyData = ({data}) => {
       return false;
     });
   };
+
   useEffect(() => {
     if (data && data.length > 0) {
       const cleanedData = removeDuplicateDates(data);
-      renderChart(data[0].symbol, cleanedData);
+      renderChart(data[0].symbol, cleanedData, dailyHighTrendlineData, dailyLowTrendlineData);
     }
-  }, [data]);
+  }, [data, dailyHighTrendlineData, dailyLowTrendlineData]);
 
-  const renderChart = (symbol, data) => {
+  const renderChart = (symbol, data, highTrendlineData, lowTrendlineData) => {
     const chartProperties = {
       width: 1400,
       height: 600,
@@ -34,56 +33,74 @@ const DailyData = ({data}) => {
         secondsVisible: false,
       }
     };
-  
+
     const chartElement = document.getElementById("daily-chart");
-  
+
     // Clear the existing chart before rendering a new one
     chartElement.innerHTML = "";
-  
+
     const chart = createChart(chartElement, chartProperties);
     chart.priceScale('right').applyOptions({
       mode: PriceScaleMode.Logarithmic
-    })
+    });
     const candleSeries = chart.addCandlestickSeries();
-      // Transform your cleaned data structure to match the expected format
+    // Transform your cleaned data structure to match the expected format
     const transformedData = data.map((d) => ({
       time: new Date(d.date).getTime() / 1000,
       open: d.open,
       high: d.high,
       low: d.low,
       close: d.close,
-    }));
-  
+    })).sort((data1, data2) => {
+      if(data1['time'] < data2['time']) return -1;
+      else return 1 
+    });
+
     candleSeries.setData(transformedData);
 
-  
-    // Add custom study overlay to show prices on the right side
-    // chart.createStudy("CustomStudy", false, false, [1000], (overlay) => {
-    //   overlay.setData(transformedData.map((d) => d.close));
-    // });
-  
-    // Generate two random dates within the data range
-    // const randomDate1 = transformedData[800].time;
-    // const randomDate2 = transformedData[900].time;
-    // const randomDate3 = transformedData[1000].time;
-  
-    // // Draw trendline
-    // const trendlineSeries = chart.addLineSeries({
-    //   color: "green",
-    //   lineStyle: 1, // Solid line
-    // });
-  
-    // const trendlineData = [
-    //   { time: randomDate1, value: transformedData[800].low }, // Start from the low of the first candle
-    //   { time: randomDate2, value: transformedData[900].low },
-    //   { time: randomDate3, value: transformedData[1000].low }, // End at the high of the last candle
-    // ];
+    // Draw high trendline
+    if (highTrendlineData && highTrendlineData.length > 0) {
+      highTrendlineData.forEach((dataPoint) => {
+        const highTrendlineSeries = chart.addLineSeries({
+          color: "red",
+          lineStyle: 1, // Solid line
+        });
 
-    
+        const transformedData = [
+          {
+            time: new Date(dataPoint.start).getTime() / 1000,
+            value: dataPoint.start_intercept,
+          },
+          {
+            time: new Date(dataPoint.end).getTime() / 1000,
+            value: dataPoint.end_intercept,
+          },
+        ];
+        highTrendlineSeries.setData(transformedData);
+      });
+    }
 
-    // trendlineSeries.setData(trendlineData);
+    // Draw low trendline
+    if (lowTrendlineData && lowTrendlineData.length > 0) {
+      lowTrendlineData.forEach((dataPoint) => {
+        const lowTrendlineSeries = chart.addLineSeries({
+          color: "green",
+          lineStyle: 1, // Solid line
+        });
+        const transformedData = [
+          {
+            time: new Date(dataPoint.start).getTime() / 1000,
+            value: dataPoint.start_intercept,
+          },
+          {
+            time: new Date(dataPoint.end).getTime() / 1000,
+            value: dataPoint.end_intercept,
+          },
+        ];
+        lowTrendlineSeries.setData(transformedData);
+      });
+    }
   };
-  
 
   return (
     <div>

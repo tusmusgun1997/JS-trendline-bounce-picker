@@ -1,9 +1,9 @@
-// globalStockDataSlice.js
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {
   getAllWeeklyHighTrendlineData,
   getAllWeeklyLowTrendlineData,
+  getAllDailyHighTrendlineData,
+  getAllDailyLowTrendlineData,
 } from '../api'; // Adjust the path based on your project structure
 
 // Async thunk to fetch all weekly high trendline data
@@ -32,12 +32,40 @@ export const fetchAllWeeklyLowTrendlineData = createAsyncThunk(
   }
 );
 
+// Async thunk to fetch all daily high trendline data
+export const fetchAllDailyHighTrendlineData = createAsyncThunk(
+  'globalStockData/fetchAllDailyHighTrendlineData',
+  async () => {
+    try {
+      const response = await getAllDailyHighTrendlineData();
+      return response.allTrendlineData;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
+// Async thunk to fetch all daily low trendline data
+export const fetchAllDailyLowTrendlineData = createAsyncThunk(
+  'globalStockData/fetchAllDailyLowTrendlineData',
+  async () => {
+    try {
+      const response = await getAllDailyLowTrendlineData();
+      return response.allTrendlineData;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
+
 // Create a globalStockData slice
 const globalStockDataSlice = createSlice({
   name: 'globalStockData',
   initialState: {
     allWeeklyHighTrendlineData: [],
     allWeeklyLowTrendlineData: [],
+    allDailyHighTrendlineData: [],
+    allDailyLowTrendlineData: [],
     status: 'idle',
     error: null,
   },
@@ -63,6 +91,28 @@ const globalStockDataSlice = createSlice({
         state.allWeeklyLowTrendlineData = action.payload;
       })
       .addCase(fetchAllWeeklyLowTrendlineData.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchAllDailyHighTrendlineData.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllDailyHighTrendlineData.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.allDailyHighTrendlineData = action.payload;
+      })
+      .addCase(fetchAllDailyHighTrendlineData.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchAllDailyLowTrendlineData.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllDailyLowTrendlineData.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.allDailyLowTrendlineData = action.payload;
+      })
+      .addCase(fetchAllDailyLowTrendlineData.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });
