@@ -1,17 +1,20 @@
 // Importing the express module
 const express = require('express');
-const { fetchDataForSymbol, fetchDistinctSymbolsWithSearchString } = require('./db/helpers/dailyData');
-const { fetchAndSortWeeklyDataForSymbol } = require('./db/helpers/weeklyData');
 const connectDB = require('./db/config');
 const cors = require("cors");
+const { fetchDataForSymbol, fetchDistinctSymbolsWithSearchString } = require('./db/helpers/dailyData');
+const { fetchAndSortWeeklyDataForSymbol } = require('./db/helpers/weeklyData');
 const { getAllWeeklyHighTrendlineData, getWeeklyHighTrendlineDataBySymbol } = require('./db/helpers/weeklyHighTrendlineData');
 const { getWeeklyLowTrendlineDataBySymbol, getAllWeeklyLowTrendlineData } = require('./db/helpers/weeklyLowTrendlineData');
+const { getDailyLowTrendlineDataBySymbol, getAllDailyLowTrendlineData } = require('./db/helpers/dailyLowTrendlineData');
+const { getDailyHighTrendlineDataBySymbol, getAllDailyHighTrendlineData } = require('./db/helpers/dailyHighTrendlineData');
 
 connectDB()
 
 // Creating an Express application
 const app = express();
 app.use(cors());
+
 // Define a route for the root URL
 app.get('/api/daily-data/:symbol', async (req, res) => {
   const { symbol } = req.params;
@@ -51,6 +54,55 @@ app.get('/api/search-symbols', async (req, res) => {
   }
 });
 
+// API endpoint to get daily low trendline data by symbol
+app.get('/api/daily-low-trendline/:symbol', async (req, res) => {
+  const { symbol } = req.params;
+
+  try {
+    const trendlineData = await getDailyLowTrendlineDataBySymbol(symbol);
+
+    res.json({ trendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get all daily low trendline data
+app.get('/api/all-daily-low-trendline', async (req, res) => {
+  try {
+    const allTrendlineData = await getAllDailyLowTrendlineData();
+
+    res.json({ allTrendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get daily high trendline data by symbol
+app.get('/api/daily-high-trendline/:symbol', async (req, res) => {
+  const { symbol } = req.params;
+
+  try {
+    const trendlineData = await getDailyHighTrendlineDataBySymbol(symbol);
+
+    res.json({ trendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get all daily high trendline data
+app.get('/api/all-daily-high-trendline', async (req, res) => {
+  try {
+    const allTrendlineData = await getAllDailyHighTrendlineData();
+
+    res.json({ allTrendlineData });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// API endpoint to get weekly high trendline data by symbol
 app.get('/api/weekly-high-trendline/:symbol', async (req, res) => {
   const { symbol } = req.params;
 
@@ -97,7 +149,6 @@ app.get('/api/all-weekly-low-trendline', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 // Start the server on port 3000
 const port = 3000;

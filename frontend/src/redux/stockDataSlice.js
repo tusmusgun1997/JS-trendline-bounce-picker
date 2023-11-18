@@ -6,9 +6,11 @@ import {
   getWeeklyData,
   getWeeklyHighTrendlineData,
   getWeeklyLowTrendlineData,
+  getDailyHighTrendlineData,
+  getDailyLowTrendlineData,
 } from '../api'; // Adjust the path based on your project structure
 
-// Async thunk to fetch both daily, weekly data, and weekly trendline data for a symbol
+// Async thunk to fetch both daily, weekly data, and trendline data for a symbol
 export const fetchStockData = createAsyncThunk('stockData/fetchStockData', async (symbol) => {
   // Fetch both daily and weekly data
   const dailyResponse = await getDailyData(symbol) ?? [];
@@ -18,12 +20,19 @@ export const fetchStockData = createAsyncThunk('stockData/fetchStockData', async
   const weeklyHighTrendlineResponse = await getWeeklyHighTrendlineData(symbol);
   const weeklyLowTrendlineResponse = await getWeeklyLowTrendlineData(symbol);
 
+  // Fetch daily high and low trendline data
+  const dailyHighTrendlineResponse = await getDailyHighTrendlineData(symbol);
+  console.log(dailyHighTrendlineResponse)
+  const dailyLowTrendlineResponse = await getDailyLowTrendlineData(symbol);
+
   return {
     symbol,
     dailyData: dailyResponse.data[0]['data'] ?? [],
-    weeklyData: weeklyResponse.data[0]['data']?? [],
+    weeklyData: weeklyResponse.data[0]['data'] ?? [],
     weeklyHighTrendlineData: weeklyHighTrendlineResponse.trendlineData ?? [],
     weeklyLowTrendlineData: weeklyLowTrendlineResponse.trendlineData ?? [],
+    dailyHighTrendlineData: dailyHighTrendlineResponse.trendlineData ?? [],
+    dailyLowTrendlineData: dailyLowTrendlineResponse.trendlineData ?? [],
   };
 });
 
@@ -36,6 +45,8 @@ const stockDataSlice = createSlice({
     weeklyData: [],
     weeklyHighTrendlineData: [],
     weeklyLowTrendlineData: [],
+    dailyHighTrendlineData: [],
+    dailyLowTrendlineData: [],
     status: 'idle',
     error: null,
   },
@@ -56,6 +67,8 @@ const stockDataSlice = createSlice({
         state.weeklyData = action.payload.weeklyData;
         state.weeklyHighTrendlineData = action.payload.weeklyHighTrendlineData;
         state.weeklyLowTrendlineData = action.payload.weeklyLowTrendlineData;
+        state.dailyHighTrendlineData = action.payload.dailyHighTrendlineData;
+        state.dailyLowTrendlineData = action.payload.dailyLowTrendlineData;
       })
       .addCase(fetchStockData.rejected, (state, action) => {
         state.status = 'failed';
