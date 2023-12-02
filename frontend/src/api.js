@@ -42,7 +42,6 @@ export const getDailyLowTrendlineData = async (symbol) => {
   }
 };
 
-// Function to fetch all daily low trendline data
 export const getAllDailyLowTrendlineData = async () => {
   try {
     const response = await axios.get(`${BASE_URL}/all-daily-low-trendline`);
